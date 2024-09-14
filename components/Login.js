@@ -112,7 +112,7 @@ export default function Login() {
         onChange={(e) => {
           setEmail(e.target.value)
         }}
-        className='w-full max-w-[400px] mx-auto px-3 duration-200 hover:border-[#78A2CC] focus:border-[#782ACC] py-2 sm:py-3 border-2 border-solid border-[#96B9D0] rounded-full outline-none'
+        className='w-full max-w-[400px] mx-auto px-3 duration-200 hover:border-[#78A2CC] focus:border-[#78A2CC] py-2 sm:py-3 border-2 border-solid border-[#96B9D0] rounded-full outline-none'
         placeholder='Email'
       />
       <input
