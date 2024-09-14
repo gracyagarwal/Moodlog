@@ -136,7 +136,7 @@ export default function Login() {
       <p className='text-center mt-4'>
         Or continue as a 
         <button onClick={handleGuestLogin} className='text-[#78A2CC] ml-2'>
-          Guest
+        Guest
         </button>
       </p>
     </div>
