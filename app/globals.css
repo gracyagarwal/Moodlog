@@ -2,26 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+.textGradient{
+  background: -webkit-linear-gradient(#78A2CC, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.purpleShadow{
+  box-shadow: 3px 3px 1px 1px #78A2CC;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.purpleShadow:hover{
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 1px 1px #AECBD6;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+body{
+  background-color: #edf5ff;
 }
