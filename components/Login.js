@@ -105,7 +105,7 @@ export default function Login() {
   return (
     <div className='flex flex-col flex-1 justify-center items-center gap-4'>
       <h3 className={'text-4xl sm:text-5xl md:text-6xl ' + fugaz.className}>{isRegister ? 'Register' : 'Log In'}</h3>
-      <p>You're one step away!</p>
+      <p>You&apos;re one step away!</p>
       {error && <p className='text-red-500'>{error}</p>} {/* Display error message */}
       <input
         value={email}
