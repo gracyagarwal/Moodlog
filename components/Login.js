@@ -128,7 +128,7 @@ export default function Login() {
         <Button clickHandler={handleSubmit} text={authenticating ? "Submitting" : "Submit"} full />
       </div>
       <p className='text-center'>
-        {isRegister ? 'Already have an account? ' : 'Don\'t have an account? '}
+        {isRegister ? 'Already have an account? ' : 'New here? '}
         <button onClick={() => setIsRegister(!isRegister)} className='text-[#78A2CC]'>
           {isRegister ? 'Sign in' : 'Sign up'}
         </button>
