@@ -1,18 +1,28 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'; // Import useSearchParams to get query parameters
 import { Fugaz_One } from 'next/font/google';
-import Button from './Button';
-import { useAuth } from '@/context/AuthContext'; // Import the useAuth hook
+import Button from '@/components/Button';
+import { useAuth } from '@/context/AuthContext'; 
+
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ['400'] });
 
-export default function Login() {
+export default function Dashboard() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isRegister, setIsRegister] = useState(false)
   const [authenticating, setAuthenticating] = useState(false)
-  const [error, setError] = useState('') // New state for error message
+  const [error, setError] = useState('')
 
-  const { signup, login, loginAsGuest } = useAuth() // Destructure the guest login function from useAuth
+  const { signup, login, loginAsGuest, currentUser } = useAuth()
+  const searchParams = useSearchParams(); // Get query parameters
+
+  useEffect(() => {
+    const registerParam = searchParams.get('register'); // Check if 'register' parameter exists
+    if (registerParam === 'true') {
+      setIsRegister(true); // Set to register mode if 'register=true'
+    }
+  }, [searchParams]);
 
   // Function to validate email format using regex
   function isValidEmail(email) {
@@ -20,15 +30,13 @@ export default function Login() {
     return emailRegex.test(email)
   }
 
-  // Updated function to validate password strength
+  // Function to validate password strength
   function isValidPassword(password) {
-    // Password must be at least 8 characters long and contain at least one uppercase letter
     const passwordRegex = /^(?=.*[A-Z]).{8,}$/
     return passwordRegex.test(password)
   }
 
   async function handleSubmit() {
-    // Check for valid email and password
     if (!isValidEmail(email)) {
       setError('Please provide a valid email address.')
       return
@@ -40,7 +48,7 @@ export default function Login() {
     }
 
     setAuthenticating(true)
-    setError('') // Reset error message before authentication attempt
+    setError('')
 
     try {
       if (isRegister) {
@@ -52,13 +60,12 @@ export default function Login() {
       }
     } catch (err) {
       console.log(err.message)
-      handleFirebaseError(err) // Call the function to handle Firebase errors
+      handleFirebaseError(err)
     } finally {
       setAuthenticating(false)
     }
   }
 
-  // Function to handle Firebase authentication errors
   function handleFirebaseError(error) {
     switch (error.code) {
       case 'auth/invalid-email':
@@ -85,14 +92,13 @@ export default function Login() {
     }
   }
 
-  // Function to handle guest login
   async function handleGuestLogin() {
     setAuthenticating(true);
     setError('');
 
     try {
       console.log('Logging in as a guest');
-      await loginAsGuest(); // Call the function to log in anonymously
+      await loginAsGuest();
       console.log('Logged in as guest');
     } catch (err) {
       console.log(err.message);
@@ -106,7 +112,7 @@ export default function Login() {
     <div className='flex flex-col flex-1 justify-center items-center gap-4'>
       <h3 className={'text-4xl sm:text-5xl md:text-6xl ' + fugaz.className}>{isRegister ? 'Register' : 'Log In'}</h3>
       <p>You&apos;re one step away!</p>
-      {error && <p className='text-red-500'>{error}</p>} {/* Display error message */}
+      {error && <p className='text-red-500'>{error}</p>}
       <input
         value={email}
         onChange={(e) => {
@@ -136,7 +142,7 @@ export default function Login() {
       <p className='text-center mt-4'>
         Or continue as a 
         <button onClick={handleGuestLogin} className='text-[#78A2CC] ml-2'>
-        Guest
+          Guest
         </button>
       </p>
     </div>
